@@ -1,0 +1,60 @@
+{
+  "name": "brillo-connetz-service",
+  "version": "1.0.0",
+  "description": "brillo connetz app",
+  "main": "app.js",
+  "scripts": {
+    "publish": "npm run test && npm start",
+    "start": "node src/index",
+    "dev": "nodemon src/index",
+    "test": "mocha src/test/index.test.js --timeout 40000",
+    "coverage": "nyc --reporter=html mocha src/test/index.test.js --timeout 40000 --bail",
+    "coverage:text": "nyc mocha src/test/index.test.js --timeout 40000 --bail"
+  },
+  "author": "Onuoha Miriam",
+  "license": "ISC",
+  "dependencies": {
+    "@vonage/server-sdk": "^2.10.10",
+    "bcrypt": "^3",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "chai": "^4.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "eureka-js-client": "^4.5.0",
+    "express": "^4.17.1",
+    "express-form-data": "^2.0.14",
+    "form-data": "^3.0.0",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^8.3.0",
+    "mongoose": "^6.1.2",
+    "nanoid": "^3.1.20",
+    "nock": "^13.0.8",
+    "node-fetch": "^2.6.1",
+    "nyc": "^15.1.0",
+    "pg": "^8.5.1",
+    "rand-token": "^1.0.1",
+    "sequelize": "^6.3.5",
+    "sinon": "^11.1.1",
+    "supertest": "^6.1.3",
+    "swagger-jsdoc": "^6.0.2",
+    "swagger-ui-express": "^4.1.6",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.4",
+    "prettier": "^2.1.2",
+    "nodemon": "^2.0.7"
+  },
+  "engines": {
+    "node": ">=10.6.0 <=14.18.1"
+  }
+}

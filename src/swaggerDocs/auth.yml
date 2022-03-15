@@ -1,0 +1,342 @@
+paths:
+  /create-user-account:
+    post:
+      tags: # Tag property
+        - AUTH # Value of the tag
+      summary: BRILLOCONNETZ ACCOUNT REGISTRATION ENDPOINT FOR USERS.
+      produces:
+        - application/json
+      parameters:
+        - in: body # request body
+          name:   create-user-account # name of request, can be any name
+          description: It enables all users to create account
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/userhAccount"
+      responses: # server responses
+        201:
+          description: should return account registration successful
+
+
+
+
+
+  /login:
+    post:
+      tags: # Tag property
+        - AUTH # Value of the tag
+      summary: GENERAL LOGIN ENDPOINT FOR USERS
+      produces:
+        - application/json
+      parameters:
+        - in: body # request body
+          name:  general login endpoint # name of request, can be any name
+          description: It enables all account to login
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/generalLogin"
+      responses: # server responses
+        201:
+          description: should return login successful
+
+
+
+
+  /validate-user-token: # path of the grp from your endpoint
+    post:
+      tags: # Tag property
+        - AUTH # Value of the tag
+      summary: ENDPOINT FOR VALIDATIONG TOKEN
+      produces:
+        - application/json
+      parameters: # request parameters
+        - in: body # request body
+          name: for validating user token # name of request, can be any name
+          description: It enables user to validate auth token
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/validateUserToken"
+      responses: # server responses
+        201:
+          description: should return user details
+
+
+
+
+  /update-user-data: 
+    put:
+      tags: # Tag property
+        - USERS # Value of the tag
+      summary: UPDATE USERS ACCOUNT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body # request body
+          name:   church-account-update # name of request, can be any name
+          description: It updates the account
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/updateAccount"
+      responses: # server responses
+        201:
+          description: should return account updated successful
+
+
+
+
+
+
+  /get-user:
+    get:
+      tags:
+        - USERS # Value of the tag
+      summary: GET A USER.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: query
+          name: authId
+          type: string
+          default: 61f15c2b57f14f8f049faf40
+          required: true
+
+      responses:
+        200:
+          description: should return a user
+
+
+
+
+
+  /forgot-Password:
+    post:
+      tags: # Tag property
+        - AUTH # Value of the tag
+      summary: FOR UPDATING PASSWORD
+      produces:
+        - application/json
+      parameters:
+        - in: body # request body
+          name:   forgotPassword # name of request, can be any name
+          description: It enables updating users code
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/forgotPassword"
+      responses: # server responses
+        200:
+          description: should return password updated successful if email is valid
+
+
+
+
+  /delete-user:
+    delete:
+      tags:
+        - USERS # Value of the tag
+      summary: DELETE USER ACCOUNT BOTH FOR ADMIN AND MEMBER.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name:   delete-account # name of request, can be any name
+          description: It enables users account to be deleted
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/deleteUser"
+      responses:
+        200:
+          description: should return account deleted successfully
+
+
+
+  /update-email:
+    put:
+      tags:
+        - AUTH  # Value of the tag
+      summary: UPDATE CHURCH EMAIL ADDRESS BY ID.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name:   update-email-address # name of request, can be any name
+          description: It enables church members to change church
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/emailAddress" 
+      responses: # server responses
+        200:
+          description: should return member church updated successfully
+
+
+
+
+
+definitions: # Schema definition for request body
+  userhAccount:
+    type: object
+    properties:
+      email:
+          type: string
+          default: miriam@gmail.com
+      password:
+          type: string
+          default: password
+                   
+      phoneNumber:
+          type: string
+          default: +2348037335555
+      
+          
+      username:
+          type: string
+          default: mimi
+          
+      profileImageUrl:
+          type: string
+          default: mimi.jpg
+
+      interest:
+          type: array
+          default: ["Football","BasketBall"]    
+
+      firstName:
+          type: string
+          default: aboy
+
+
+      lastName:
+          type: string
+          default: lyon
+     
+          
+
+
+
+    
+
+    
+  generalLogin:
+    type: object
+    properties:
+      email:
+          type: string
+          default: miriam@gmail.com
+
+      password:
+          type: string
+          default: password
+     
+
+  validateUserToken:
+    type: object
+    properties:
+      token:
+          type: string
+          default: pass in user token
+          
+
+
+  
+
+  updateAccount:
+    type: object
+    properties:
+      authId:
+          type: string
+          default: 6c02428b-2fc4-4cc2-b923-c045401f84b
+        
+
+      username:
+          type: string
+          default: mimiluv
+
+      firstName:
+          type: string
+          default: aboy
+
+
+      lastName:
+          type: string
+          default: lyon
+
+              
+    
+
+    
+  
+
+
+
+  deleteUser:
+    type: object
+    properties:
+      authId:
+          type: string
+          default: 61dcba2f975d5458b6164f01
+
+
+
+
+
+  forgotPassword:
+    type: object
+    properties:
+      email:
+          type: string
+          default: mimi@gmail.com
+     
+      password:
+          type: string
+          default: password
+
+
+  emailAddress:  
+    type: object
+    properties:  
+      newEmail:
+          type: String
+          default: 'mimi@gmail.com'  
+
+      authId:
+          type: String
+          default: '05533fe8-3c2d-4b13-8c20-3425754fc056'
+
+
+      phoneNumber:
+          type: String
+          default: '+2348037335555'  
+
+      oldEmail:
+          type: String
+          default: 'miriam@gmail.com'                   
+
+
+
+
+
+  
+
+ 
+    
