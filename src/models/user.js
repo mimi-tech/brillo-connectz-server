@@ -19,9 +19,14 @@ const users = new mongoose.Schema({
         required: [true, 'user must have an interest'],
 
     },
-    isPhoneNumberVerified: {
+    isAccountVerified: {
         type: Boolean,
         default: false,
+    },
+
+    verificationCode: {
+        type: Number,
+        required: [true, 'verification is required'],
     },
 
     

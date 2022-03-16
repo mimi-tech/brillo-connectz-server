@@ -18,7 +18,10 @@ module.exports = {
     lastName: Joi.string().required(),
     interest: Joi.string().lowercase({ force: true }).required(),
   },
-
+  validateAuthCodes:{ 
+    authId: Joi.string().required(),
+    verificationCode: Joi.number().required(),
+  },
 
   getAUser:{
     authId: Joi.string().required(),

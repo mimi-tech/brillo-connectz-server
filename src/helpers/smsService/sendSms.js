@@ -11,7 +11,7 @@ const sendOtpToPhone = async (to, text) => {
             })
 
 
-            const from = "Church app"
+            const from = "BrilloConntz"
 
 
             vonage.message.sendSms(from, to, text, (err, responseData) => {

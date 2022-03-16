@@ -25,6 +25,8 @@ routes.put("/update-email",validate(validator.updateEmailAddress),auth.updateEma
 
 routes.get("/match-user",validate(validator.matchUsers),auth.matchUsers);
 
+routes.post("/verify-auth-code",validate(validator.validateAuthCodes),auth.validateAuthCodes);
+
 
 
 module.exports = routes; 

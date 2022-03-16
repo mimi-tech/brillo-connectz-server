@@ -57,6 +57,11 @@ const welcomeText = async (req, res) => {
     const data = await auth.matchUsers(req.form);
     return response(res, data);
   };
+
+  const validateAuthCodes = async (req, res) => {
+    const data = await auth.validateAuthCodes(req.form);
+    return response(res, data);
+  };
   
  
 
@@ -74,5 +79,6 @@ const welcomeText = async (req, res) => {
     deleteAUser,
     forgotPassword,
     updateEmailAddress,
-    matchUsers
+    matchUsers,
+    validateAuthCodes
   }

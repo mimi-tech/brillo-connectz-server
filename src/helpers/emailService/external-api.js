@@ -3,7 +3,7 @@ const request = require("../request");
 const sendEmailVerificationCode = async (body) => {
     try {
 
-        const url = `${process.env.CHURCH_EMAIL_SERVICE_BASE_URL}/send-email-verficaiton-code`;
+        const url = `${process.env.EMAIL_SERVICE_BASE_URL}/send-email`;
 
         const response = await request(url, "POST", body);
 
@@ -18,7 +18,7 @@ const sendEmailVerificationCode = async (body) => {
 
             return {
                 status: false,
-                message: "Error calling church app email service",
+                message: "Error calling email service",
             };
         }
 

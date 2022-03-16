@@ -40,7 +40,23 @@ paths:
           description: should return login successful
 
 
-
+  /verify-auth-codes:
+    post:
+      tags: # Tag property
+        - AUTH # Value of the tag
+      summary: FOR VALIDATING ACCOUNT CODES.
+      produces:
+        - application/json
+      parameters:
+        - in: body # request body
+          name:   validate  account # name of request, can be any name
+          description: It enables all users to validate  account
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/validateAuthCodes"
+      responses: # server responses
+        201:
+          description: should return successful
 
   /validate-user-token: # path of the grp from your endpoint
     post:
@@ -365,7 +381,20 @@ definitions: # Schema definition for request body
 
       oldEmail:
           type: String
-          default: 'miriam@gmail.com'                   
+          default: 'miriam@gmail.com'   
+
+  validateAuthCodes:
+    type: object
+    properties:
+      authId:
+          type: string
+          default: 61dcba2f975d5458b6164f01
+
+    
+      verificationCode:
+          type: number
+          default: 123456
+                             
 
 
 
