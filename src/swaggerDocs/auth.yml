@@ -323,14 +323,7 @@ definitions: # Schema definition for request body
           type: string
           default: mimiluv
 
-      firstName:
-          type: string
-          default: aboy
-
-
-      lastName:
-          type: string
-          default: lyon
+     
 
               
     

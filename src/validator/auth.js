@@ -31,8 +31,7 @@ module.exports = {
   updateAuthData:{
     authId: Joi.string().required(),
     username: Joi.string().lowercase({ force: true }).required(),
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
+    
   },
 
 

@@ -4,8 +4,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { constants } = require("../configs");
 const { Users } = require("../models");
-
-
+const { generalHelperFunctions } = require("../helpers");
+const { EmailService } = require("../helpers/emailService");
+const { SendOtp } = require("../helpers/smsService");
 
 
 /**
@@ -72,10 +73,10 @@ const generalLogin = async (params) => {
    
     //check if phone number is verified
 
-    if (userExist.isPhoneNumberVerified === false) {
+    if (userExist.isAccountVerified === false) {
       return {
         status: true,
-        message: "verify user phone number to login",
+        message: "verify user account to login",
         data:userExist
       };
     }
@@ -118,6 +119,7 @@ const userRegistration = async (params) => {
       interest,
       firstName,
       lastName,
+      
     } = params;
 
 
@@ -161,7 +163,10 @@ const userRegistration = async (params) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     
+     // generate phone number code
  
+     const phoneNumberCode = generalHelperFunctions.generatePhoneNumberCode();
+     const message = `Otp number${phoneNumberCode}`;
     //create account
     const newUserAccount = await Users.create({
       email: email,
@@ -173,9 +178,19 @@ const userRegistration = async (params) => {
       isPhoneNumberVerified:true,
       firstName: firstName,
       lastName: lastName,
+      verificationCode:phoneNumberCode
     });
     
-   
+   //send otp to user phone number
+    await SendOtp.sendOtpToPhone(phoneNumber, message);
+
+   //send emailCode to user email
+
+ await EmailService.sendEmailVerificationCode({
+   user: email,
+   code: phoneNumberCode,
+ });
+
  
 
     const publicData = {
@@ -200,7 +215,81 @@ const userRegistration = async (params) => {
   }
 };
 
+/**
+ * for validating sent auth codes
+ * @param {Object} params  user id {authId,emailcode} params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message
+ */
+ const validateAuthCodes = async (params) => {
+  try {
+    const { authId, verificationCode } = params;
 
+    //check if authId is valid
+    const user = await Users.findOne({
+      _id: authId,
+    });
+
+    if (!user) {
+      return {
+        status: false,
+        message: "invalid authId",
+      };
+    }
+
+
+
+
+
+    const authCodes = {
+      _id: authId,
+      verificationCode: verificationCode,
+     
+    }
+
+
+
+    //check if user auth codes are valid
+    const isAccountCodeValid = await Users.findOne(authCodes);
+
+
+    if (!isAccountCodeValid) {
+      return {
+        status: false,
+        message: "invalid code match",
+      };
+    }
+
+
+    const filter = { _id: authId };
+    const update = { isAccountVerified: true };
+    await Users.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+
+    const { email: _email, _id, phoneNumber } = user;
+
+    const serializeUserDetails = { _email, _id, phoneNumber };
+
+    //authenticate the user if email code is valid
+    const accessToken = jwt.sign(serializeUserDetails, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+
+
+
+    return {
+      status: true,
+      token:accessToken,
+      data: user,
+      message: "authentication codes verified successfully:",
+    };
+  } catch (e) {
+    return {
+      status: false,
+      message: constants.SERVER_ERROR(" AUTH CODES VERIFICATION"),
+    };
+  }
+};
 
 /**
  * validates user token
@@ -305,8 +394,7 @@ const updateAuthData = async (params) => {
     const {
       authId,
       username,
-      firstName,
-      lastName,
+    
     } = params;
 
     //check if auth id exist
@@ -348,8 +436,7 @@ const updateAuthData = async (params) => {
       const filter = { _id: authId };
       const update = {
         username: username,
-        firstName:firstName,
-        lastName:lastName
+       
         
       };
       await Users.findOneAndUpdate(filter, update, {
@@ -598,6 +685,7 @@ module.exports = {
   welcomeText,
   generalLogin,
   userRegistration,
+  validateAuthCodes,
   validateUserToken,
   updateAuthData,
   deleteAChurchUser,
