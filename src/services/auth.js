@@ -537,6 +537,63 @@ const forgotPassword = async (params) => {
 
 
 
+
+/**
+ * Update password endpoint
+ * @param {Object} params email and password.
+ * @returns {Promise<Object>} Contains status, and returns data and message
+ */
+ const matchUsers = async (params) => {
+  try {
+    const { authId, interest, page } = params;
+    const pageCount = 15;
+     //check if the user email is already existing
+     const user = await Users.findOne({
+      _id: authId,
+    });
+
+    if (!user) {
+      return {
+        status: false,
+        message: "User does not exist",
+      };
+    }
+
+   //match users
+
+   const allUsers = await Users.find({
+    
+    interest:interest,
+    _id: { $ne: authId },
+   
+  })
+    .limit(pageCount)
+    .skip(pageCount * (page - 1))
+    .exec();
+
+   if(!allUsers){
+    return {
+      status: false,
+      data:"You have no interest match yet"
+    };
+   }
+
+    return {
+      status: true,
+      data:allUsers
+    };
+
+
+  } catch (e) {
+    return {
+      status: false,
+      message: constants.SERVER_ERROR("MATCH USERS"),
+    };
+  }
+};
+
+
+
 module.exports = {
   welcomeText,
   generalLogin,
@@ -547,6 +604,7 @@ module.exports = {
   getAUser,
   
   forgotPassword,
-  updateEmailAddress
+  updateEmailAddress,
+  matchUsers
   
 };

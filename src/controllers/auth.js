@@ -52,6 +52,11 @@ const welcomeText = async (req, res) => {
     const data = await auth.updateEmailAddress(req.form);
     return response(res, data);
   };
+
+  const matchUsers = async (req, res) => {
+    const data = await auth.matchUsers(req.form);
+    return response(res, data);
+  };
   
  
 
@@ -68,5 +73,6 @@ const welcomeText = async (req, res) => {
     updateAuthData,
     deleteAUser,
     forgotPassword,
-    updateEmailAddress
+    updateEmailAddress,
+    matchUsers
   }

@@ -190,6 +190,41 @@ paths:
           description: should return member church updated successfully
 
 
+  /match-user:
+    get:
+      tags:
+        - USERS # Value of the tag
+      summary: MATCH A USER.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: query
+          name: authId
+          type: string
+          default: 61f15c2b57f14f8f049faf40
+          required: true
+
+        - in: query
+          name: page
+          type: number
+          default: 1
+          required: true  
+
+        - in: query
+          name: interest
+          type: string
+          default: football
+          required: true    
+
+      responses:
+        200:
+          description: should return a user match
 
 
 
@@ -218,8 +253,8 @@ definitions: # Schema definition for request body
           default: mimi.jpg
 
       interest:
-          type: array
-          default: ["Football","BasketBall"]    
+          type: string
+          default: football    
 
       firstName:
           type: string

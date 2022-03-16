@@ -15,7 +15,7 @@ const users = new mongoose.Schema({
     },
 
     interest: {
-        type: Array,
+        type: String,
         required: [true, 'user must have an interest'],
 
     },

@@ -23,6 +23,8 @@ routes.post("/forgot-Password",validate(validator.forgotPassword),auth.forgotPas
 
 routes.put("/update-email",validate(validator.updateEmailAddress),auth.updateEmailAddress);
 
+routes.get("/match-user",validate(validator.matchUsers),auth.matchUsers);
+
 
 
 module.exports = routes; 

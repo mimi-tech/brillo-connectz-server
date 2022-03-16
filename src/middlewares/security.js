@@ -10,7 +10,7 @@ const nonRestrictedEndPoints = [
   "/login",
   "/forgot-Password",
   "/validate-user-token",
- 
+  "/match-user",
 
 ];
 
@@ -20,8 +20,8 @@ const restrictedEndPoints = [
   "/get-user",
   "/update-user-data",
   "/delete-user",
-   "/update-email"
-   
+   "/update-email",
+  
    
   
 ]

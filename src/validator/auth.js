@@ -16,7 +16,7 @@ module.exports = {
     profileImageUrl: Joi.string().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
-    interest: Joi.array().required(),
+    interest: Joi.string().lowercase({ force: true }).required(),
   },
 
 
@@ -53,6 +53,13 @@ module.exports = {
     phoneNumber: Joi.string().required(),
     authId: Joi.string().required(),
     oldEmail: Joi.string().required(),
+  },
+  
+  matchUsers:{ 
+    interest: Joi.string().required(),
+    page: Joi.number().required(),
+    authId: Joi.string().required(),
+   
   },
 
 
