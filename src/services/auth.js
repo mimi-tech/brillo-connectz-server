@@ -71,15 +71,7 @@ const generalLogin = async (params) => {
     }
 
    
-    //check if phone number is verified
-
-    if (userExist.isAccountVerified === false) {
-      return {
-        status: true,
-        message: "verify user account to login",
-        data:userExist
-      };
-    }
+    
 
     const { email: _email, phone, _username, _id } = userExist;
 
